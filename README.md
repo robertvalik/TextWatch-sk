@@ -3,7 +3,7 @@ TextWatch-en
 
 Pebble TextWatch english
 
-Screenshot: https://raw.github.com/arska/TextWatch-en/master/Screenshot.jpg
+![](/Screenshot.jpg)
 
 Download: https://github.com/arska/TextWatch-en/blob/master/build/TextWatch-en.pbw
 
