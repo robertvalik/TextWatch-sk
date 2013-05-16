@@ -1,53 +1,68 @@
-#include "num2words-en.h"
+#include "num2words-sk.h"
 #include "string.h"
 
+// jednotky bez desiatok
 static const char* const ONES[] = {
-  "zero",
-  "one",
-  "two",
-  "three",
-  "four",
-  "five",
-  "six",
-  "seven",
-  "eight",
-  "nine"
+  "hodín",
+  "jeda",
+  "dve",
+  "tri",
+  "štyri",
+  "päť",
+  "šesť",
+  "sedem",
+  "osem",
+  "deväť"
+};
+
+// jednotky po desiatkach
+static const char* const ONEST[] = {
+  "",
+  "jeden",
+  "dva",
+  "tri",
+  "štyri",
+  "päť",
+  "šesť",
+  "sedem",
+  "osem",
+  "deväť"
 };
 
 static const char* const TEENS[] ={
   "",
-  "eleven",
-  "twelve",
-  "thirteen",
-  "fourteen",
-  "fifteen",
-  "sixteen",
-  "seventeen",
-  "eighteen",
-  "nineteen"
+  "jedenásť",
+  "dvanásť",
+  "trinásť",
+  "štrnásť",
+  "pätnásť",
+  "šestnásť",
+  "sedem- násť",
+  "osemnásť",
+  "devätnásť"
 };
 
 static const char* const TENS[] = {
-  "",
-  "ten",
-  "twenty",
-  "thirty",
-  "forty",
-  "fifty",
-  "sixty",
-  "seventy",
-  "eighty",
-  "ninety"
+  "štyridsať", //"",
+  "desať",
+  "dvadsať",
+  "tridsať",
+  "štyridsať",
+  "päťdesiat",
+  "šesťdesiat",
+  "sedemdesiat",
+  "osemdesiat",
+  "deväťdesiat"
 };
 
-static const char* STR_OH_CLOCK = "o'clock";
-static const char* STR_NOON = "noon";
-static const char* STR_MIDNIGHT = "midnight";
-static const char* STR_QUARTER = "quarter";
-static const char* STR_TO = "to";
-static const char* STR_PAST = "past";
-static const char* STR_HALF = "half";
-static const char* STR_AFTER = "after";
+static const char* STR_OH_CLOCK = "hodín";
+static const char* STR_NOON = "poludnie";
+static const char* STR_MIDNIGHT = "polnoc";
+static const char* STR_QUARTER = "";
+static const char* STR_TO = "trištvrte na";
+static const char* STR_PAST = "štvrť na";
+static const char* STR_HALF = "pol";
+static const char* STR_AFTER = "po";
 
 static size_t append_number(char* words, int num) {
   int tens_val = num / 10 % 10;
@@ -65,9 +80,17 @@ static size_t append_number(char* words, int num) {
     if (ones_val > 0) {
       strcat(words, " ");
       len += 1;
+
+      // jednotky maju iny gramaticky tvar, ak su za desiatkami
+      if (ones_val > 0 || num == 0) {
+        strcat(words, ONEST[ones_val]);
+        len += strlen(ONEST[ones_val]);
+      }
     }
+    return len;
   }
 
+  // sem sa dostaneme, ak nejde o desiatky
   if (ones_val > 0 || num == 0) {
     strcat(words, ONES[ones_val]);
     len += strlen(ONES[ones_val]);
@@ -93,7 +116,7 @@ void time_to_words(int hours, int minutes, char* words, size_t length) {
   } else if (hours == 12) {
     remaining -= append_string(words, remaining, STR_NOON);
   } else {
-    remaining -= append_number(words, hours % 12);
+    remaining -= append_number(words, hours);
   }
 
   remaining -= append_string(words, remaining, " ");
@@ -110,7 +133,7 @@ void time_to_2words(int hours, int minutes, char* words, size_t length, char* wo
   } else if (hours == 12) {
     remaining -= append_string(words, remaining, STR_NOON);
   } else {
-    remaining -= append_number(words, hours % 12);
+    remaining -= append_number(words, hours);
   }
 
   size_t remaining2 = length2;
@@ -174,7 +197,7 @@ void fuzzy_time_to_words(int hours, int minutes, char* words, size_t length) {
   } else if (fuzzy_hours == 12) {
     remaining -= append_string(words, remaining, STR_NOON);
   } else {
-    remaining -= append_number(words, fuzzy_hours % 12);
+    remaining -= append_number(words, fuzzy_hours);
   }
 
   if (fuzzy_minutes == 5 && !(fuzzy_hours == 0 || fuzzy_hours == 12)) {
