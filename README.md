@@ -7,6 +7,10 @@ Pebble TextWatch slovak
 
 Download: 
 
+Compiling: Exactly as described in the SDK how to, but you need to apply this patch: https://github.com/fisakov/pebble-sdk-characterRegex
+
+
+
 Original english version: https://github.com/arska/TextWatch-en
 
 Credits from the original version:
