@@ -5,7 +5,7 @@ Pebble TextWatch slovak
 
 ![](/Screenshot.jpg)
 
-Download: 
+Download: https://github.com/robertvalik/TextWatch-sk/blob/master/build/TextWatch-sk.pbw
 
 Compiling: Exactly as described in the SDK how to, but you need to apply this patch: https://github.com/fisakov/pebble-sdk-characterRegex
 
