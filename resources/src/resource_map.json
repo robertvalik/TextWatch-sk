@@ -4,11 +4,13 @@
 
  "media": [
      {"type":"font",
-      "defName":"FONT_SANSATION_LIGHT_42",
+      "characterRegex": "[-:a-zľščťžýáíéúäôňď \u0010]",
+      "defName":"FONT_SANSATION_LIGHT_32",
       "file":"fonts/sansation/Sansation_Light_42.ttf"
      },
      {"type":"font",
-      "defName":"FONT_SANSATION_BOLD_42",
+      "characterRegex": "[-:a-zľščťžýáíéúäôňď \u0010]",
+      "defName":"FONT_SANSATION_BOLD_32",
       "file":"fonts/sansation/Sansation_Bold_42.ttf"
      }
 ]
