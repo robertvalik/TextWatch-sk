@@ -1,12 +1,14 @@
-TextWatch-en
+TextWatch-sk
 ============
 
-Pebble TextWatch english
+Pebble TextWatch slovak
 
 ![](/Screenshot.jpg)
 
-Download: https://github.com/arska/TextWatch-en/blob/master/build/TextWatch-en.pbw
+Download: 
+
+Original english version: https://github.com/arska/TextWatch-en
+
+Credits from the original version:
 
 Thanks: Viktor Hansson (http://forums.getpebble.com/discussion/4265/swedish-fuzzy-time) for the source and fonts of his swedish fuzzy_time clone
-
-German version: https://github.com/arska/TextWatch-de
