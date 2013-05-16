@@ -9,7 +9,7 @@
 PBL_APP_INFO(MY_UUID,
              "TextWatch-sk",
              "Aarno Aukia a@aukia.com",
-             2, 0, /* App version */
+             0, 1, /* App version */
              DEFAULT_MENU_ICON,
              APP_INFO_WATCH_FACE);
 

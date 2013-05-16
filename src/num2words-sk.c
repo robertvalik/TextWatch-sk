@@ -3,8 +3,8 @@
 
 // jednotky bez desiatok
 static const char* const ONES[] = {
-  "hodín",
-  "jeda",
+  "",
+  "jedna",
   "dve",
   "tri",
   "štyri",
@@ -43,7 +43,7 @@ static const char* const TEENS[] ={
 };
 
 static const char* const TENS[] = {
-  "štyridsať", //"",
+  "",
   "desať",
   "dvadsať",
   "tridsať",
