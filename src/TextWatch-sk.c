@@ -1,13 +1,13 @@
 #include "pebble_os.h"
 #include "pebble_app.h"
 #include "pebble_fonts.h"
-#include "num2words-en.h"
+#include "num2words-sk.h"
 #include "resource_ids.auto.h"
 
 
-#define MY_UUID { 0xB7, 0x59, 0xD5, 0xF6, 0xAD, 0xD9, 0x43, 0x1F, 0x97, 0xC1, 0x8B, 0xE9, 0x64, 0x42, 0x4A, 0xB8 }
+#define MY_UUID { 0x24, 0xA2, 0xD8, 0x3A, 0x89, 0x90, 0x4B, 0xEA, 0xA2, 0x9F, 0x1A, 0x92, 0x26, 0xC3, 0xDC, 0x1E }
 PBL_APP_INFO(MY_UUID,
-             "TextWatch-en", 
+             "TextWatch-sk",
              "Aarno Aukia a@aukia.com",
              2, 0, /* App version */
              DEFAULT_MENU_ICON,
@@ -44,11 +44,11 @@ static void handle_init(AppContextRef ctx) {
   resource_init_current_app(&APP_RESOURCES);
 
   //GFont gotham = fonts_get_system_font(FONT_KEY_DROID_SERIF_28_BOLD);
-  GFont fontPlain = fonts_load_custom_font(resource_get_handle(RESOURCE_ID_FONT_SANSATION_LIGHT_42));
-  GFont fontBold = fonts_load_custom_font(resource_get_handle(RESOURCE_ID_FONT_SANSATION_BOLD_42));
+  GFont fontPlain = fonts_load_custom_font(resource_get_handle(RESOURCE_ID_FONT_SANSATION_LIGHT_32));
+  GFont fontBold = fonts_load_custom_font(resource_get_handle(RESOURCE_ID_FONT_SANSATION_BOLD_32));
 
-  text_layer_init(&s_data.label, GRect(0, 0, s_data.window.layer.frame.size.w, 100));
-  text_layer_init(&s_data.label2, GRect(0, 37, s_data.window.layer.frame.size.w, s_data.window.layer.frame.size.h - 37));
+  text_layer_init(&s_data.label, GRect(0, 12, s_data.window.layer.frame.size.w, 100));
+  text_layer_init(&s_data.label2, GRect(0, 75, s_data.window.layer.frame.size.w, s_data.window.layer.frame.size.h - 75));
   text_layer_set_background_color(&s_data.label, GColorClear);
   text_layer_set_background_color(&s_data.label2, GColorClear);
   text_layer_set_text_color(&s_data.label, GColorWhite);
