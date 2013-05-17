@@ -8,9 +8,9 @@
 #define MY_UUID { 0x24, 0xA2, 0xD8, 0x3A, 0x89, 0x90, 0x4B, 0xEA, 0xA2, 0x9F, 0x1A, 0x92, 0x26, 0xC3, 0xDC, 0x1E }
 PBL_APP_INFO(MY_UUID,
              "TextWatch-sk",
-             "Aarno Aukia a@aukia.com",
-             0, 1, /* App version */
-             DEFAULT_MENU_ICON,
+             "Robert Valik valik@visitors.sk",
+             0, 2, /* App version */
+             RESOURCE_ID_IMAGE_MENU_ICON,
              APP_INFO_WATCH_FACE);
 
 #define BUFFER_SIZE 86
@@ -43,7 +43,6 @@ static void handle_init(AppContextRef ctx) {
   window_set_background_color(&s_data.window, GColorBlack);
   resource_init_current_app(&APP_RESOURCES);
 
-  //GFont gotham = fonts_get_system_font(FONT_KEY_DROID_SERIF_28_BOLD);
   GFont fontPlain = fonts_load_custom_font(resource_get_handle(RESOURCE_ID_FONT_SANSATION_LIGHT_32));
   GFont fontBold = fonts_load_custom_font(resource_get_handle(RESOURCE_ID_FONT_SANSATION_BOLD_32));
 

@@ -1,9 +1,11 @@
+#include <stdbool.h>
+
 #include "num2words-sk.h"
 #include "string.h"
 
 // jednotky bez desiatok
 static const char* const ONES[] = {
-  "",
+  "nula",
   "jedna",
   "dve",
   "tri",
@@ -17,7 +19,7 @@ static const char* const ONES[] = {
 
 // jednotky po desiatkach
 static const char* const ONEST[] = {
-  "",
+  "nula",
   "jeden",
   "dva",
   "tri",
@@ -39,7 +41,7 @@ static const char* const TEENS[] ={
   "šestnásť",
   "sedem- násť",
   "osemnásť",
-  "devätnásť"
+  "devät- násť"
 };
 
 static const char* const TENS[] = {
@@ -55,153 +57,132 @@ static const char* const TENS[] = {
   "deväťdesiat"
 };
 
-static const char* STR_OH_CLOCK = "hodín";
-static const char* STR_NOON = "poludnie";
-static const char* STR_MIDNIGHT = "polnoc";
-static const char* STR_QUARTER = "";
-static const char* STR_TO = "trištvrte na";
-static const char* STR_PAST = "štvrť na";
-static const char* STR_HALF = "pol";
-static const char* STR_AFTER = "po";
+static char* STR_OH_CLOCK = "hodín";
+static char* MINUTES = "minút";
+static char* STR_OH_CLOCK_1 = "hodina";
+static char* MINUTES_1 = "minúta";
+static char* STR_OH_CLOCK_23 = "hodiny";
+static char* MINUTES_23 = "minúty";
+//static const char* STR_NOON = "poludnie";
+//static const char* STR_MIDNIGHT = "polnoc";
 
-static size_t append_number(char* words, int num) {
+static size_t append_number(char* words, int num, int add_inf) {
   int tens_val = num / 10 % 10;
   int ones_val = num % 10;
+  char* minutes_string = MINUTES;
+  char* hours_string = STR_OH_CLOCK;
 
+  if (num == 1) {
+    minutes_string = MINUTES_1;
+    hours_string = STR_OH_CLOCK_1;      
+  }
+  else if (num == 2 || num == 3) {      
+    minutes_string = MINUTES_23;
+    hours_string = STR_OH_CLOCK_23;      
+  }
+  
   size_t len = 0;
+
+    if (add_inf == -1) {
+        strcat(words, hours_string);
+        return strlen(hours_string);       
+    }
+
+    if (add_inf == 1) {
+        strcat(words, " \n");
+        len += 2;
+    }
+
 
   if (tens_val > 0) {
     if (tens_val == 1 && num != 10) {
       strcat(words, TEENS[ones_val]);
-      return strlen(TEENS[ones_val]);
+      len += strlen(TEENS[ones_val]);
+      //return len;
     }
-    strcat(words, TENS[tens_val]);
-    len += strlen(TENS[tens_val]);
-    if (ones_val > 0) {
-      strcat(words, " ");
-      len += 1;
+    else {
+        strcat(words, TENS[tens_val]);
+        len += strlen(TENS[tens_val]);
+        if (ones_val > 0) {
+          strcat(words, " ");
+          len += 1;
 
-      // jednotky maju iny gramaticky tvar, ak su za desiatkami
-      if (ones_val > 0 || num == 0) {
-        strcat(words, ONEST[ones_val]);
-        len += strlen(ONEST[ones_val]);
-      }
+          // jednotky maju iny gramaticky tvar, ak su za desiatkami
+          if (ones_val > 0 || num == 0) {
+            strcat(words, ONEST[ones_val]);
+            len += strlen(ONEST[ones_val]);
+          }
+        }
+        //return len;
     }
-    return len;
   }
-
-  // sem sa dostaneme, ak nejde o desiatky
-  if (ones_val > 0 || num == 0) {
+  else if (ones_val > 0 || num == 0) {
     strcat(words, ONES[ones_val]);
     len += strlen(ONES[ones_val]);
   }
+  
+    if (add_inf == 2) {
+        strcat(words, " ");
+        len += 1;
+        strcat(words, hours_string);
+        return strlen(hours_string);       
+    }
+  
+    if (add_inf == 3) {
+        strcat(words, " ");
+        len += 1;
+        strcat(words, minutes_string);
+        return strlen(minutes_string);       
+    }
+  
+  
   return len;
 }
 
-static size_t append_string(char* buffer, const size_t length, const char* str) {
-  strncat(buffer, str, length);
-
-  size_t written = strlen(str);
-  return (length > written) ? written : length;
-}
-
-
-void time_to_words(int hours, int minutes, char* words, size_t length) {
-
-  size_t remaining = length;
-  memset(words, 0, length);
-
-  if (hours == 0) {
-    remaining -= append_string(words, remaining, STR_MIDNIGHT);
-  } else if (hours == 12) {
-    remaining -= append_string(words, remaining, STR_NOON);
-  } else {
-    remaining -= append_number(words, hours);
-  }
-
-  remaining -= append_string(words, remaining, " ");
-  remaining -= append_number(words, minutes);
-
-}
 void time_to_2words(int hours, int minutes, char* words, size_t length, char* words2, size_t length2) {
+    
+    bool hour_ones = hours < 10;
+    bool hour_tens = ((hours % 10) == 0);
+    bool hour_teens = ((hours > 10) && (hours < 20));
+    bool hour_twoline_teens = ((hours == 17) || (hours == 19));
+    bool hour_is_single_line = hour_tens || hour_ones || (hour_teens && !hour_twoline_teens);
+
+    bool minute_ones = minutes < 10;
+    bool minute_tens = ((minutes % 10) == 0);
+    bool minute_teens = ((minutes > 10) && (minutes < 20));
+    bool minute_twoline_teens = ((minutes == 17) || (minutes == 19));
+    bool minute_is_single_line = minute_tens || minute_ones || (minute_teens && !minute_twoline_teens);
+    
+    int hour_add_inf = 0;
+    int minute_add_inf = 0;
+    
+    if (minutes == 0 && hour_is_single_line) {
+        hour_add_inf = 1;
+        minute_add_inf = -1;
+        minutes = hours;
+    }
+    else if (minutes == 0 && !hour_is_single_line) {
+        hour_add_inf = 0;
+        minute_add_inf = -1;        
+        minutes = hours;
+    }
+    else if (hour_is_single_line && minute_is_single_line) {
+        hour_add_inf = 2;
+        minute_add_inf = 3;
+    }
+    else if (hour_is_single_line) {
+        hour_add_inf = 1;
+    }
 
   size_t remaining = length;
   memset(words, 0, length);
 
-  if (hours == 0) {
-    remaining -= append_string(words, remaining, STR_MIDNIGHT);
-  } else if (hours == 12) {
-    remaining -= append_string(words, remaining, STR_NOON);
-  } else {
-    remaining -= append_number(words, hours);
-  }
+  remaining -= append_number(words, hours, hour_add_inf);
 
   size_t remaining2 = length2;
   memset(words2, 0, length2);
 
-  remaining2 -= append_number(words2, minutes);
+  remaining2 -= append_number(words2, minutes, minute_add_inf);
 
 }
 
-void fuzzy_time_to_words(int hours, int minutes, char* words, size_t length) {
-  int fuzzy_hours = hours;
-  int fuzzy_minutes = ((minutes + 2) / 5) * 5;
-
-  // Handle hour & minute roll-over.
-  if (fuzzy_minutes > 55) {
-    fuzzy_minutes = 0;
-    fuzzy_hours += 1;
-    if (fuzzy_hours > 23) {
-      fuzzy_hours = 0;
-    }
-  }
-
-  size_t remaining = length;
-  memset(words, 0, length);
-
-  if (fuzzy_minutes != 0 && (fuzzy_minutes >= 10 || fuzzy_minutes == 5 || fuzzy_hours == 0 || fuzzy_hours == 12)) {
-    if (fuzzy_minutes == 15) {
-      remaining -= append_string(words, remaining, STR_QUARTER);
-      remaining -= append_string(words, remaining, " ");
-      remaining -= append_string(words, remaining, STR_AFTER);
-      remaining -= append_string(words, remaining, " ");
-    } else if (fuzzy_minutes == 45) {
-      remaining -= append_string(words, remaining, STR_QUARTER);
-      remaining -= append_string(words, remaining, " ");
-      remaining -= append_string(words, remaining, STR_TO);
-      remaining -= append_string(words, remaining, " ");
-
-      fuzzy_hours = (fuzzy_hours + 1) % 24;
-    } else if (fuzzy_minutes == 30) {
-      remaining -= append_string(words, remaining, STR_HALF);
-      remaining -= append_string(words, remaining, " ");
-      remaining -= append_string(words, remaining, STR_PAST);
-      remaining -= append_string(words, remaining, " ");
-    } else if (fuzzy_minutes < 30) {
-      remaining -= append_number(words, fuzzy_minutes);
-      remaining -= append_string(words, remaining, " ");
-      remaining -= append_string(words, remaining, STR_AFTER);
-      remaining -= append_string(words, remaining, " ");
-    } else {
-      remaining -= append_number(words, 60 - fuzzy_minutes);
-      remaining -= append_string(words, remaining, " ");
-      remaining -= append_string(words, remaining, STR_TO);
-      remaining -= append_string(words, remaining, " ");
-
-      fuzzy_hours = (fuzzy_hours + 1) % 24;
-    }
-  }
-
-  if (fuzzy_hours == 0) {
-    remaining -= append_string(words, remaining, STR_MIDNIGHT);
-  } else if (fuzzy_hours == 12) {
-    remaining -= append_string(words, remaining, STR_NOON);
-  } else {
-    remaining -= append_number(words, fuzzy_hours);
-  }
-
-  if (fuzzy_minutes == 5 && !(fuzzy_hours == 0 || fuzzy_hours == 12)) {
-    remaining -= append_string(words, remaining, " ");
-    remaining -= append_string(words, remaining, STR_OH_CLOCK);
-  }
-}

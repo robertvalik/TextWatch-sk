@@ -1,17 +1,24 @@
 {
- "friendlyVersion": "0.1",
- "versionDefName": "APP_RESOURCES",
+    "friendlyVersion": "0.2",
+    "versionDefName": "APP_RESOURCES",
 
- "media": [
-     {"type":"font",
-      "characterRegex": "[-:a-zľščťžýáíéúäôňď \u0010]",
-      "defName":"FONT_SANSATION_LIGHT_32",
-      "file":"fonts/sansation/Sansation_Light_42.ttf"
-     },
-     {"type":"font",
-      "characterRegex": "[-:a-zľščťžýáíéúäôňď \u0010]",
-      "defName":"FONT_SANSATION_BOLD_32",
-      "file":"fonts/sansation/Sansation_Bold_42.ttf"
-     }
-]
+    "media": [
+        {
+            "type": "png",
+            "defName": "IMAGE_MENU_ICON",
+            "file": "images/menu_icon_text-watch-sk.png"
+        },
+        {
+            "type":"font",
+            "characterRegex": "[-aáädehiíjlmnoprsštťuúvy \u0010]",
+            "defName":"FONT_SANSATION_LIGHT_32",
+            "file":"fonts/sansation/Sansation_Light_42.ttf"
+        },
+        {
+            "type":"font",
+            "characterRegex": "[-aáädehiíjlmnoprsštťuúvy \u0010]",
+            "defName":"FONT_SANSATION_BOLD_32",
+            "file":"fonts/sansation/Sansation_Bold_42.ttf"
+        }
+    ]
 }
