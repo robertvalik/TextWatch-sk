@@ -1,5 +1,5 @@
 {
-    "friendlyVersion": "0.2",
+    "friendlyVersion": "0.4",
     "versionDefName": "APP_RESOURCES",
 
     "media": [
@@ -11,13 +11,13 @@
         {
             "type":"font",
             "characterRegex": "[-aáädehiíjlmnoprsštťuúvy \u0010]",
-            "defName":"FONT_SANSATION_LIGHT_32",
+            "defName":"FONT_SANSATION_LIGHT_34",
             "file":"fonts/sansation/Sansation_Light_42.ttf"
         },
         {
             "type":"font",
             "characterRegex": "[-aáädehiíjlmnoprsštťuúvy \u0010]",
-            "defName":"FONT_SANSATION_BOLD_32",
+            "defName":"FONT_SANSATION_BOLD_35",
             "file":"fonts/sansation/Sansation_Bold_42.ttf"
         }
     ]
