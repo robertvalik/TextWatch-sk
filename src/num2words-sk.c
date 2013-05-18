@@ -61,8 +61,8 @@ static char* STR_OH_CLOCK = "hodín";
 static char* MINUTES = "minút";
 static char* STR_OH_CLOCK_1 = "hodina";
 static char* MINUTES_1 = "minúta";
-static char* STR_OH_CLOCK_23 = "hodiny";
-static char* MINUTES_23 = "minúty";
+static char* STR_OH_CLOCK_234 = "hodiny";
+static char* MINUTES_234 = "minúty";
 //static const char* STR_NOON = "poludnie";
 //static const char* STR_MIDNIGHT = "polnoc";
 
@@ -76,9 +76,9 @@ static size_t append_number(char* words, int num, int add_inf) {
     minutes_string = MINUTES_1;
     hours_string = STR_OH_CLOCK_1;      
   }
-  else if (num == 2 || num == 3) {      
-    minutes_string = MINUTES_23;
-    hours_string = STR_OH_CLOCK_23;      
+  else if (num == 2 || num == 3 || num == 4) {      
+    minutes_string = MINUTES_234;
+    hours_string = STR_OH_CLOCK_234;      
   }
   
   size_t len = 0;
