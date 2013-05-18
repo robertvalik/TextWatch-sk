@@ -9,7 +9,7 @@
 PBL_APP_INFO(MY_UUID,
              "TextWatch-sk",
              "Robert Valik valik@visitors.sk",
-             0, 2, /* App version */
+             0, 3, /* App version */
              RESOURCE_ID_IMAGE_MENU_ICON,
              APP_INFO_WATCH_FACE);
 
