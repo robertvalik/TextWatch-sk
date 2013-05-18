@@ -5,12 +5,12 @@
 #include "resource_ids.auto.h"
 
 #define DEBUG 0
-#define ANIMATION_DURATION 0
+#define ANIMATION_DURATION 80
 #define BUFFER_SIZE 44
 
 #define MY_UUID { 0x24, 0xA2, 0xD8, 0x3A, 0x89, 0x90, 0x4B, 0xEA, 0xA2, 0x9F, 0x1A, 0x92, 0x26, 0xC3, 0xDC, 0x1E }
 PBL_APP_INFO(MY_UUID,
-             "TextWatch-sk-noanim",
+             "TextWatch-sk",
              "Robert Valik valik@visitors.sk",
              0, 5, /* App version */
              RESOURCE_ID_IMAGE_MENU_ICON,
