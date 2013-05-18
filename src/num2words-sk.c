@@ -40,7 +40,7 @@ static const char* const TEENS[] ={
   "pätnásť",
   "šestnásť",
   "sedem- násť",
-  "osemnásť",
+  "osem- násť",
   "devät- násť"
 };
 
@@ -144,13 +144,13 @@ void time_to_2words(int hours, int minutes, char* words, size_t length, char* wo
     bool hour_ones = hours < 10;
     bool hour_tens = ((hours % 10) == 0);
     bool hour_teens = ((hours > 10) && (hours < 20));
-    bool hour_twoline_teens = ((hours == 17) || (hours == 19));
+    bool hour_twoline_teens = ((hours == 17) || (hours == 18) || (hours == 19));
     bool hour_is_single_line = hour_tens || hour_ones || (hour_teens && !hour_twoline_teens);
 
     bool minute_ones = minutes < 10;
     bool minute_tens = ((minutes % 10) == 0);
     bool minute_teens = ((minutes > 10) && (minutes < 20));
-    bool minute_twoline_teens = ((minutes == 17) || (minutes == 19));
+    bool minute_twoline_teens = ((minutes == 17) || (minutes == 18) || (minutes == 19));
     bool minute_is_single_line = minute_tens || minute_ones || (minute_teens && !minute_twoline_teens);
     
     int hour_add_inf = 0;

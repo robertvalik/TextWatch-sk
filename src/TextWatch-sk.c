@@ -9,7 +9,7 @@
 PBL_APP_INFO(MY_UUID,
              "TextWatch-sk",
              "Robert Valik valik@visitors.sk",
-             0, 3, /* App version */
+             0, 4, /* App version */
              RESOURCE_ID_IMAGE_MENU_ICON,
              APP_INFO_WATCH_FACE);
 
@@ -43,11 +43,11 @@ static void handle_init(AppContextRef ctx) {
   window_set_background_color(&s_data.window, GColorBlack);
   resource_init_current_app(&APP_RESOURCES);
 
-  GFont fontPlain = fonts_load_custom_font(resource_get_handle(RESOURCE_ID_FONT_SANSATION_LIGHT_32));
-  GFont fontBold = fonts_load_custom_font(resource_get_handle(RESOURCE_ID_FONT_SANSATION_BOLD_32));
+  GFont fontPlain = fonts_load_custom_font(resource_get_handle(RESOURCE_ID_FONT_SANSATION_LIGHT_34));
+  GFont fontBold = fonts_load_custom_font(resource_get_handle(RESOURCE_ID_FONT_SANSATION_BOLD_35));
 
   text_layer_init(&s_data.label, GRect(0, 12, s_data.window.layer.frame.size.w, 100));
-  text_layer_init(&s_data.label2, GRect(0, 75, s_data.window.layer.frame.size.w, s_data.window.layer.frame.size.h - 75));
+  text_layer_init(&s_data.label2, GRect(0, 81, s_data.window.layer.frame.size.w, s_data.window.layer.frame.size.h - 81));
   text_layer_set_background_color(&s_data.label, GColorClear);
   text_layer_set_background_color(&s_data.label2, GColorClear);
   text_layer_set_text_color(&s_data.label, GColorWhite);
