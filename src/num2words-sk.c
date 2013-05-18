@@ -174,15 +174,15 @@ void time_to_2words(int hours, int minutes, char* words, size_t length, char* wo
         hour_add_inf = 1;
     }
 
-  size_t remaining = length;
-  memset(words, 0, length);
+    size_t remaining = length;
+    memset(words, 0, length);
 
-  remaining -= append_number(words, hours, hour_add_inf);
+    remaining -= append_number(words, hours, hour_add_inf);
 
-  size_t remaining2 = length2;
-  memset(words2, 0, length2);
+    size_t remaining2 = length2;
+    memset(words2, 0, length2);
 
-  remaining2 -= append_number(words2, minutes, minute_add_inf);
+    remaining2 -= append_number(words2, minutes, minute_add_inf);
 
 }
 
