@@ -51,10 +51,10 @@ static const char* const TENS[] = {
   "tridsať",
   "štyridsať",
   "päťdesiat",
-  "šesťdesiat",
+  /*"šesťdesiat",
   "sedemdesiat",
   "osemdesiat",
-  "deväťdesiat"
+  "deväťdesiat"*/
 };
 
 static char* STR_OH_CLOCK = "hodín";

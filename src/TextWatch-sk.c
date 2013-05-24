@@ -3,16 +3,69 @@
 #include "pebble_fonts.h"
 #include "num2words-sk.h"
 #include "resource_ids.auto.h"
+#include "settings.c"
 
-#define DEBUG 0
-#define ANIMATION_DURATION 80
-#define BUFFER_SIZE 44
+#if HOUR_VIBRATION
+
+static const uint32_t const vibes_00[] = { 200, 100, 200 };
+static const uint32_t const vibes_01[] = { 100 };
+static const uint32_t const vibes_02[] = { 100, 200, 100 };
+static const uint32_t const vibes_03[] = { 100, 200, 100, 200, 100 };
+static const uint32_t const vibes_04[] = { 100, 200, 100, 200, 100, 200, 100 };
+static const uint32_t const vibes_05[] = { 300 };
+static const uint32_t const vibes_06[] = { 300, 200, 100 };
+static const uint32_t const vibes_07[] = { 300, 200, 100, 200, 100 };
+static const uint32_t const vibes_08[] = { 300, 200, 100, 200, 100, 200, 100 };
+static const uint32_t const vibes_09[] = { 300, 200, 100, 200, 100, 200, 100, 200, 100 };
+static const uint32_t const vibes_10[] = { 300, 200, 300 };
+static const uint32_t const vibes_11[] = { 300, 200, 300, 200, 100 };
+static const uint32_t const vibes_12[] = { 300, 200, 300, 200, 100, 200, 100 };
+static const uint32_t const vibes_13[] = { 300, 200, 300, 200, 100, 200, 100, 200, 100 };
+static const uint32_t const vibes_14[] = { 300, 200, 300, 200, 100, 200, 100, 200, 100, 200, 100 };
+static const uint32_t const vibes_15[] = { 300, 200, 300, 200, 300 };
+static const uint32_t const vibes_16[] = { 300, 200, 300, 200, 300, 200, 100 };
+static const uint32_t const vibes_17[] = { 300, 200, 300, 200, 300, 200, 100, 200, 100 };
+static const uint32_t const vibes_18[] = { 300, 200, 300, 200, 300, 200, 100, 200, 100, 200, 100 };
+static const uint32_t const vibes_19[] = { 300, 200, 300, 200, 300, 200, 100, 200, 100, 200, 100, 200, 100 };
+static const uint32_t const vibes_20[] = { 300, 200, 300, 200, 300, 200, 300 };
+static const uint32_t const vibes_21[] = { 300, 200, 300, 200, 300, 200, 300, 200, 100 };
+static const uint32_t const vibes_22[] = { 300, 200, 300, 200, 300, 200, 300, 200, 100, 200, 100 };
+static const uint32_t const vibes_23[] = { 300, 200, 300, 200, 300, 200, 300, 200, 100, 200, 100, 200, 100 };
+
+VibePattern foo[24] = {
+    { .durations = vibes_00, .num_segments = ARRAY_LENGTH(vibes_00) },
+    { .durations = vibes_01, .num_segments = ARRAY_LENGTH(vibes_01) },
+    { .durations = vibes_02, .num_segments = ARRAY_LENGTH(vibes_02) },
+    { .durations = vibes_03, .num_segments = ARRAY_LENGTH(vibes_03) },
+    { .durations = vibes_04, .num_segments = ARRAY_LENGTH(vibes_04) },
+    { .durations = vibes_05, .num_segments = ARRAY_LENGTH(vibes_05) },
+    { .durations = vibes_06, .num_segments = ARRAY_LENGTH(vibes_06) },
+    { .durations = vibes_07, .num_segments = ARRAY_LENGTH(vibes_07) },
+    { .durations = vibes_08, .num_segments = ARRAY_LENGTH(vibes_08) },
+    { .durations = vibes_09, .num_segments = ARRAY_LENGTH(vibes_09) },
+    { .durations = vibes_10, .num_segments = ARRAY_LENGTH(vibes_10) },
+    { .durations = vibes_11, .num_segments = ARRAY_LENGTH(vibes_11) },
+    { .durations = vibes_12, .num_segments = ARRAY_LENGTH(vibes_12) },
+    { .durations = vibes_13, .num_segments = ARRAY_LENGTH(vibes_13) },
+    { .durations = vibes_14, .num_segments = ARRAY_LENGTH(vibes_14) },
+    { .durations = vibes_15, .num_segments = ARRAY_LENGTH(vibes_15) },
+    { .durations = vibes_16, .num_segments = ARRAY_LENGTH(vibes_16) },
+    { .durations = vibes_17, .num_segments = ARRAY_LENGTH(vibes_17) },
+    { .durations = vibes_18, .num_segments = ARRAY_LENGTH(vibes_18) },
+    { .durations = vibes_19, .num_segments = ARRAY_LENGTH(vibes_19) },
+    { .durations = vibes_20, .num_segments = ARRAY_LENGTH(vibes_20) },
+    { .durations = vibes_21, .num_segments = ARRAY_LENGTH(vibes_21) },
+    { .durations = vibes_22, .num_segments = ARRAY_LENGTH(vibes_22) },
+    { .durations = vibes_23, .num_segments = ARRAY_LENGTH(vibes_23) },
+};
+
+#endif
 
 #define MY_UUID { 0x24, 0xA2, 0xD8, 0x3A, 0x89, 0x90, 0x4B, 0xEA, 0xA2, 0x9F, 0x1A, 0x92, 0x26, 0xC3, 0xDC, 0x1E }
 PBL_APP_INFO(MY_UUID,
              "TextWatch-sk",
              "Robert Valik valik@visitors.sk",
-             0, 5, /* App version */
+             1, 0, /* App version */
              RESOURCE_ID_IMAGE_MENU_ICON,
 #if DEBUG
              APP_INFO_STANDARD_APP
@@ -142,7 +195,7 @@ void display_initial_time(PblTm *t)
 void configureBoldLayer(TextLayer *textlayer)
 {
 	text_layer_set_font(textlayer, fonts_load_custom_font(resource_get_handle(RESOURCE_ID_FONT_SANSATION_BOLD_35)));
-	text_layer_set_text_color(textlayer, GColorWhite);
+	text_layer_set_text_color(textlayer, COLOR_TEXT);
 	text_layer_set_background_color(textlayer, GColorClear);
 	text_layer_set_text_alignment(textlayer, GTextAlignmentLeft);
 }
@@ -151,7 +204,7 @@ void configureBoldLayer(TextLayer *textlayer)
 void configureLightLayer(TextLayer *textlayer)
 {
 	text_layer_set_font(textlayer, fonts_load_custom_font(resource_get_handle(RESOURCE_ID_FONT_SANSATION_LIGHT_34)));
-	text_layer_set_text_color(textlayer, GColorWhite);
+	text_layer_set_text_color(textlayer, COLOR_TEXT);
 	text_layer_set_background_color(textlayer, GColorClear);
 	text_layer_set_text_alignment(textlayer, GTextAlignmentLeft);
 }
@@ -209,7 +262,7 @@ void handle_init(AppContextRef ctx) {
 
 	window_init(&window, "Clock_Window");
 	window_stack_push(&window, true);
-	window_set_background_color(&window, GColorBlack);
+	window_set_background_color(&window, COLOR_BG);
 
 	// Init resources
 	resource_init_current_app(&APP_RESOURCES);
@@ -246,6 +299,12 @@ void handle_init(AppContextRef ctx) {
 void handle_minute_tick(AppContextRef ctx, PebbleTickEvent *t) {
   (void)ctx;
 
+#if HOUR_VIBRATION
+  if ((t->tick_time->tm_min == 0) && (t->tick_time->tm_sec < 2) ) vibes_enqueue_custom_pattern(foo[t->tick_time->tm_hour]);
+#endif
+#if HOUR_SIMPLE_VIBRATION
+  if ((t->tick_time->tm_min == 0) && (t->tick_time->tm_sec < 2) ) vibes_short_pulse();
+#endif
   display_time(t->tick_time);
 }
 
@@ -254,7 +313,7 @@ void pbl_main(void *params) {
     .init_handler = &handle_init,
 	.tick_info = {
 		      .tick_handler = &handle_minute_tick,
-		      .tick_units = SECOND_UNIT
+		      .tick_units = MINUTE_UNIT
 		    }
   };
   app_event_loop(params, &handlers);
